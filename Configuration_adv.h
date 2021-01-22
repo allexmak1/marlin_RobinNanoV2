@@ -23,7 +23,7 @@
 
 /**
  * Configuration_adv.h
- *
+ * мой
  * Advanced settings.
  * Only change these if you know exactly what you're doing.
  * Some of these settings can damage your printer if improperly set!
@@ -130,7 +130,7 @@
 #if DISABLED(PIDTEMPBED)
   #define BED_CHECK_INTERVAL 5000   // (ms) Interval between checks in bang-bang control
   #if ENABLED(BED_LIMIT_SWITCHING)
-    #define BED_HYSTERESIS 2        // (°C) Only set the relevant heater state when ABS(T-target) > BED_HYSTERESIS
+    #define BED_HYSTERESIS 2        // (В°C) Only set the relevant heater state when ABS(T-target) > BED_HYSTERESIS
   #endif
 #endif
 
@@ -139,8 +139,8 @@
 //
 #if TEMP_SENSOR_CHAMBER
   #define CHAMBER_MINTEMP             5
-  #define CHAMBER_MAXTEMP            60
-  #define TEMP_CHAMBER_HYSTERESIS     1   // (°C) Temperature proximity considered "close enough" to the target
+  #define CHAMBER_MAXTEMP            80//60
+  #define TEMP_CHAMBER_HYSTERESIS     1   // (В°C) Temperature proximity considered "close enough" to the target
   //#define CHAMBER_LIMIT_SWITCHING
   //#define HEATER_CHAMBER_PIN       44   // Chamber heater on/off pin
   //#define HEATER_CHAMBER_INVERTING false
@@ -152,10 +152,10 @@
       #define CHAMBER_FAN_BASE  255   // Chamber fan PWM (0-255)
     #elif CHAMBER_FAN_MODE == 1
       #define CHAMBER_FAN_BASE  128   // Base chamber fan PWM (0-255); turns on when chamber temperature is above the target
-      #define CHAMBER_FAN_FACTOR 25   // PWM increase per °C above target
+      #define CHAMBER_FAN_FACTOR 25   // PWM increase per В°C above target
     #elif CHAMBER_FAN_MODE == 2
       #define CHAMBER_FAN_BASE  128   // Minimum chamber fan PWM (0-255)
-      #define CHAMBER_FAN_FACTOR 25   // PWM increase per °C difference from target
+      #define CHAMBER_FAN_FACTOR 25   // PWM increase per В°C difference from target
     #endif
   #endif
 
@@ -317,8 +317,8 @@
   // Turn on AUTOTEMP on M104/M109 by default using proportions set here
   //#define AUTOTEMP_PROPORTIONAL
   #if ENABLED(AUTOTEMP_PROPORTIONAL)
-    #define AUTOTEMP_MIN_P      0 // (°C) Added to the target temperature
-    #define AUTOTEMP_MAX_P      5 // (°C) Added to the target temperature
+    #define AUTOTEMP_MIN_P      0 // (В°C) Added to the target temperature
+    #define AUTOTEMP_MAX_P      5 // (В°C) Added to the target temperature
     #define AUTOTEMP_FACTOR_P   1 // Apply this F parameter by default (overridden by M104/M109 F)
   #endif
 #endif
@@ -374,9 +374,9 @@
 //#define HOTEND_IDLE_TIMEOUT
 #if ENABLED(HOTEND_IDLE_TIMEOUT)
   #define HOTEND_IDLE_TIMEOUT_SEC (5*60)    // (seconds) Time without extruder movement to trigger protection
-  #define HOTEND_IDLE_MIN_TRIGGER   180     // (°C) Minimum temperature to enable hotend protection
-  #define HOTEND_IDLE_NOZZLE_TARGET   0     // (°C) Safe temperature for the nozzle after timeout
-  #define HOTEND_IDLE_BED_TARGET      0     // (°C) Safe temperature for the bed after timeout
+  #define HOTEND_IDLE_MIN_TRIGGER   180     // (В°C) Minimum temperature to enable hotend protection
+  #define HOTEND_IDLE_NOZZLE_TARGET   0     // (В°C) Safe temperature for the nozzle after timeout
+  #define HOTEND_IDLE_BED_TARGET      0     // (В°C) Safe temperature for the bed after timeout
 #endif
 
 // @section temperature
@@ -474,7 +474,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+#define E0_AUTO_FAN_PIN FAN1_PIN
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -854,7 +854,7 @@
 #define DEFAULT_MINTRAVELFEEDRATE     0.0     // (mm/s) Minimum travel feedrate. Set with M205 T.
 
 // Minimum time that a segment needs to take as the buffer gets emptied
-#define DEFAULT_MINSEGMENTTIME        20000   // (µs) Set with M205 B.
+#define DEFAULT_MINSEGMENTTIME        20000   // (Вµs) Set with M205 B.
 
 // Slow down the machine if the lookahead buffer is (by default) half full.
 // Increase the slowdown divisor for larger buffer sizes.
@@ -923,7 +923,7 @@
  * and hotend offsets.
  *
  * Note: HOTEND_OFFSET and CALIBRATION_OBJECT_CENTER must be set to within
- *       ±5mm of true values for G425 to succeed.
+ *       В±5mm of true values for G425 to succeed.
  */
 //#define CALIBRATION_GCODE
 #if ENABLED(CALIBRATION_GCODE)
@@ -974,7 +974,7 @@
  * vibration and surface artifacts. The algorithm adapts to provide the best possible step smoothing at the
  * lowest stepping frequencies.
  */
-//#define ADAPTIVE_STEP_SMOOTHING
+#define ADAPTIVE_STEP_SMOOTHING
 
 /**
  * Custom Microstepping
@@ -1164,7 +1164,7 @@
 
   // The standard SD detect circuit reads LOW when media is inserted and HIGH when empty.
   // Enable this option and set to HIGH if your SD cards are incorrectly detected.
-  //#define SD_DETECT_STATE HIGH
+  #define SD_DETECT_STATE HIGH
 
   //#define SDCARD_READONLY                 // Read-only SD card (to save over 2K of flash)
 
@@ -1251,10 +1251,10 @@
   #endif
 
   // This allows hosts to request long names for files and folders with M33
-  //#define LONG_FILENAME_HOST_SUPPORT
+  #define LONG_FILENAME_HOST_SUPPORT
 
   // Enable this option to scroll long filenames in the SD card menu
-  //#define SCROLL_LONG_FILENAMES
+  #define SCROLL_LONG_FILENAMES
 
   // Leave the heaters on after Stop Print (not recommended!)
   //#define SD_ABORT_NO_COOLDOWN
@@ -1276,7 +1276,7 @@
   /**
    * Auto-report SdCard status with M27 S<seconds>
    */
-  //#define AUTO_REPORT_SD_STATUS
+  #define AUTO_REPORT_SD_STATUS
 
   /**
    * Support for USB thumb drives using an Arduino USB Host Shield or
@@ -1327,7 +1327,7 @@
   #endif
 
   // Add an optimized binary file transfer mode, initiated with 'M28 B1'
-  //#define BINARY_FILE_TRANSFER
+  #define BINARY_FILE_TRANSFER
 
   /**
    * Set this option to one of the following (or the board's defaults apply):
@@ -1396,7 +1396,7 @@
    */
   #if ENABLED(U8GLIB_ST7920)
     // Enable this option and reduce the value to optimize screen updates.
-    // The normal delay is 10µs. Use the lowest value that still gives a reliable display.
+    // The normal delay is 10Вµs. Use the lowest value that still gives a reliable display.
     //#define DOGM_SPI_DELAY_US 5
 
     //#define LIGHTWEIGHT_UI
@@ -1422,7 +1422,7 @@
   //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
   //#define STATUS_HEAT_PERCENT       // Show heating in a progress bar
   //#define BOOT_MARLIN_LOGO_SMALL    // Show a smaller Marlin logo on the Boot Screen (saving 399 bytes of flash)
-  //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~‭3260 (or ~940) bytes of PROGMEM.
+  //#define BOOT_MARLIN_LOGO_ANIMATED // Animated Marlin logo. Costs ~вЂ­3260 (or ~940) bytes of PROGMEM.
 
   // Frivolous Game Options
   //#define MARLIN_BRICKOUT
@@ -1525,16 +1525,16 @@
     #if ENABLED(TOUCH_UI_UTF8_WESTERN_CHARSET)
       // Additional character groups. These characters require
       // full bitmaps and take up considerable storage:
-      //#define TOUCH_UI_UTF8_SUPERSCRIPTS  // ¹ ² ³
-      //#define TOUCH_UI_UTF8_COPYRIGHT     // © ®
-      //#define TOUCH_UI_UTF8_GERMANIC      // ß
-      //#define TOUCH_UI_UTF8_SCANDINAVIAN  // Æ Ð Ø Þ æ ð ø þ
-      //#define TOUCH_UI_UTF8_PUNCTUATION   // « » ¿ ¡
-      //#define TOUCH_UI_UTF8_CURRENCY      // ¢ £ ¤ ¥
-      //#define TOUCH_UI_UTF8_ORDINALS      // º ª
-      //#define TOUCH_UI_UTF8_MATHEMATICS   // ± × ÷
-      //#define TOUCH_UI_UTF8_FRACTIONS     // ¼ ½ ¾
-      //#define TOUCH_UI_UTF8_SYMBOLS       // µ ¶ ¦ § ¬
+      //#define TOUCH_UI_UTF8_SUPERSCRIPTS  // В№ ВІ Ві
+      //#define TOUCH_UI_UTF8_COPYRIGHT     // В© В®
+      //#define TOUCH_UI_UTF8_GERMANIC      // Гџ
+      //#define TOUCH_UI_UTF8_SCANDINAVIAN  // Г† Гђ Г� Гћ Г¦ Г° Гё Гѕ
+      //#define TOUCH_UI_UTF8_PUNCTUATION   // В« В» Вї ВЎ
+      //#define TOUCH_UI_UTF8_CURRENCY      // Вў ВЈ В¤ ВҐ
+      //#define TOUCH_UI_UTF8_ORDINALS      // Вє ВЄ
+      //#define TOUCH_UI_UTF8_MATHEMATICS   // В± Г— Г·
+      //#define TOUCH_UI_UTF8_FRACTIONS     // Вј ВЅ Вѕ
+      //#define TOUCH_UI_UTF8_SYMBOLS       // Вµ В¶ В¦ В§ В¬
     #endif
   #endif
 
@@ -1603,7 +1603,7 @@
  *
  * Warning: Does not respect endstops!
  */
-//#define BABYSTEPPING
+#define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
   //#define BABYSTEP_WITHOUT_HOMING
@@ -1653,9 +1653,9 @@
 //#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
-  #define LIN_ADVANCE_K 0.22    // Unit: mm compression per 1mm/s extruder speed
+  #define LIN_ADVANCE_K 0//0.22    // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
-  //#define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
+  #define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
 #endif
 
 // @section leveling
@@ -1834,7 +1834,7 @@
 
 /**
  * Minimum delay before and after setting the stepper DIR (in ns)
- *     0 : No delay (Expect at least 10µS since one Stepper ISR must transpire)
+ *     0 : No delay (Expect at least 10ВµS since one Stepper ISR must transpire)
  *    20 : Minimum for TMC2xxx drivers
  *   200 : Minimum for A4988 drivers
  *   400 : Minimum for A5984 drivers
@@ -1849,7 +1849,7 @@
 //#define MINIMUM_STEPPER_PRE_DIR_DELAY 650
 
 /**
- * Minimum stepper driver pulse width (in µs)
+ * Minimum stepper driver pulse width (in Вµs)
  *   0 : Smallest possible width the MCU can produce, compatible with TMC2xxx drivers
  *   0 : Minimum 500ns for LV8729, adjusted in stepper.h
  *   1 : Minimum for A4988 and A5984 stepper drivers
@@ -1859,7 +1859,7 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_PULSE 2
+#define MINIMUM_STEPPER_PULSE 2
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
@@ -1891,7 +1891,7 @@
 #if BOTH(SDSUPPORT, DIRECT_STEPPING)
   #define BLOCK_BUFFER_SIZE  8
 #elif ENABLED(SDSUPPORT)
-  #define BLOCK_BUFFER_SIZE 16
+  #define BLOCK_BUFFER_SIZE 32//16
 #else
   #define BLOCK_BUFFER_SIZE 16
 #endif
@@ -1900,7 +1900,7 @@
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 4
+#define BUFSIZE 32//4
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
@@ -1909,18 +1909,18 @@
 // For debug-echo: 128 bytes for the optimal speed.
 // Other output doesn't need to be that speedy.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256]
-#define TX_BUFFER_SIZE 0
+#define TX_BUFFER_SIZE 236//0
 
 // Host Receive Buffer Size
 // Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
 // To use flow control, set this buffer size to at least 1024 bytes.
 // :[0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048]
-//#define RX_BUFFER_SIZE 1024
+#define RX_BUFFER_SIZE 2048//1024
 
 #if RX_BUFFER_SIZE >= 1024
   // Enable to have the controller send XON/XOFF control characters to
   // the host to signal the RX buffer is becoming full.
-  //#define SERIAL_XON_XOFF
+  #define SERIAL_XON_XOFF
 #endif
 
 // Add M575 G-code to change the baud rate
@@ -1953,7 +1953,7 @@
 //#define NO_TIMEOUTS 1000 // Milliseconds
 
 // Some clients will have this feature soon. This could make the NO_TIMEOUTS unnecessary.
-//#define ADVANCED_OK
+#define ADVANCED_OK
 
 // Printrun may have trouble receiving long strings all at once.
 // This option inserts short delays between lines of serial output.
@@ -2087,9 +2087,9 @@
  * Requires NOZZLE_PARK_FEATURE.
  * This feature is required for the default FILAMENT_RUNOUT_SCRIPT.
  */
-//#define ADVANCED_PAUSE_FEATURE
+#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
-  #define PAUSE_PARK_RETRACT_FEEDRATE         60  // (mm/s) Initial retract feedrate.
+  #define PAUSE_PARK_RETRACT_FEEDRATE         35//60  // (mm/s) Initial retract feedrate.
   #define PAUSE_PARK_RETRACT_LENGTH            2  // (mm) Initial retract.
                                                   // This short retract is done immediately, before parking the nozzle.
   #define FILAMENT_CHANGE_UNLOAD_FEEDRATE     10  // (mm/s) Unload filament feedrate. This can be pretty fast.
@@ -2106,29 +2106,29 @@
   #define FILAMENT_CHANGE_FAST_LOAD_LENGTH     0  // (mm) Load length of filament, from extruder gear to nozzle.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
-  //#define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the purge length until interrupted.
+  #define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the purge length until interrupted.
   #define ADVANCED_PAUSE_PURGE_FEEDRATE        3  // (mm/s) Extrude feedrate (after loading). Should be slower than load feedrate.
   #define ADVANCED_PAUSE_PURGE_LENGTH         50  // (mm) Length to extrude after loading.
                                                   //   Set to 0 for manual extrusion.
                                                   //   Filament can be extruded repeatedly from the Filament Change menu
                                                   //   until extrusion is consistent, and to purge old filament.
   #define ADVANCED_PAUSE_RESUME_PRIME          0  // (mm) Extra distance to prime nozzle after returning from park.
-  //#define ADVANCED_PAUSE_FANS_PAUSE             // Turn off print-cooling fans while the machine is paused.
+  #define ADVANCED_PAUSE_FANS_PAUSE             // Turn off print-cooling fans while the machine is paused.
 
                                                   // Filament Unload does a Retract, Delay, and Purge first:
-  #define FILAMENT_UNLOAD_PURGE_RETRACT       13  // (mm) Unload initial retract length.
-  #define FILAMENT_UNLOAD_PURGE_DELAY       5000  // (ms) Delay for the filament to cool after retract.
-  #define FILAMENT_UNLOAD_PURGE_LENGTH         8  // (mm) An unretract is done, then this length is purged.
+  #define FILAMENT_UNLOAD_PURGE_RETRACT       10//13  // (mm) Unload initial retract length.
+  #define FILAMENT_UNLOAD_PURGE_DELAY       750//5000  // (ms) Delay for the filament to cool after retract.
+  #define FILAMENT_UNLOAD_PURGE_LENGTH         3//8  // (mm) An unretract is done, then this length is purged.
   #define FILAMENT_UNLOAD_PURGE_FEEDRATE      25  // (mm/s) feedrate to purge before unload
 
   #define PAUSE_PARK_NOZZLE_TIMEOUT           45  // (seconds) Time limit before the nozzle is turned off for safety.
   #define FILAMENT_CHANGE_ALERT_BEEPS         10  // Number of alert beeps to play when a response is needed.
   #define PAUSE_PARK_NO_STEPPER_TIMEOUT           // Enable for XYZ steppers to stay powered on during filament change.
 
-  //#define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
-  //#define HOME_BEFORE_FILAMENT_CHANGE           // If needed, home before parking for filament change
+  #define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
+  #define HOME_BEFORE_FILAMENT_CHANGE           // If needed, home before parking for filament change
 
-  //#define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
+  #define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
   //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
 #endif
 
@@ -2328,7 +2328,7 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      700//max 700
+    #define E0_CURRENT      650//max 700
     #define E0_MICROSTEPS    32
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
@@ -2468,7 +2468,7 @@
    * CHOPPER_DEFAULT_24V
    * CHOPPER_DEFAULT_36V
    * CHOPPER_09STEP_24V   // 0.9 degree steppers (24V)
-   * CHOPPER_PRUSAMK3_24V // Imported parameters from the official Průša firmware for MK3 (24V)
+   * CHOPPER_PRUSAMK3_24V // Imported parameters from the official PrЕЇЕЎa firmware for MK3 (24V)
    * CHOPPER_MARLIN_119   // Old defaults from Marlin v1.1.9
    *
    * Define you own with
@@ -2873,9 +2873,9 @@
    *  Example pulse data for Nikon: https://bit.ly/2FKD0Aq
    *                     IR Wiring: https://git.io/JvJf7
    */
-  //#define PHOTO_PULSES_US { 2000, 27850, 400, 1580, 400, 3580, 400 }  // (µs) Durations for each 48.4kHz oscillation
+  //#define PHOTO_PULSES_US { 2000, 27850, 400, 1580, 400, 3580, 400 }  // (Вµs) Durations for each 48.4kHz oscillation
   #ifdef PHOTO_PULSES_US
-    #define PHOTO_PULSE_DELAY_US 13 // (µs) Approximate duration of each HIGH and LOW pulse in the oscillation
+    #define PHOTO_PULSE_DELAY_US 13 // (Вµs) Approximate duration of each HIGH and LOW pulse in the oscillation
   #endif
 #endif
 
@@ -3226,7 +3226,7 @@
  */
 //#define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
-  //#define CUSTOM_USER_MENU_TITLE "Custom Commands"
+  #define CUSTOM_USER_MENU_TITLE "Custom Commands"
   #define USER_SCRIPT_DONE "M117 User Script Done"
   #define USER_SCRIPT_AUDIBLE_FEEDBACK
   //#define USER_SCRIPT_RETURN  // Return to status screen after a script
@@ -3409,7 +3409,7 @@
   //#define MAX7219_GCODE          // Add the M7219 G-code to control the LED matrix
   #define MAX7219_INIT_TEST    2   // Test pattern at startup: 0=none, 1=sweep, 2=spiral
   #define MAX7219_NUMBER_UNITS 1   // Number of Max7219 units in chain.
-  #define MAX7219_ROTATE       0   // Rotate the display clockwise (in multiples of +/- 90°)
+  #define MAX7219_ROTATE       0   // Rotate the display clockwise (in multiples of +/- 90В°)
                                    // connector at:  right=0   bottom=-90  top=90  left=180
   //#define MAX7219_REVERSE_ORDER  // The individual LED matrix units may be in reversed order
   //#define MAX7219_SIDE_BY_SIDE   // Big chip+matrix boards can be chained side-by-side
@@ -3463,7 +3463,7 @@
 #endif
 
 /**
- * Průša Multi-Material Unit v2
+ * PrЕЇЕЎa Multi-Material Unit v2
  * Enable in Configuration.h
  */
 #if ENABLED(PRUSA_MMU2)
@@ -3487,7 +3487,7 @@
   //#define MMU2_MENUS
   #if ENABLED(MMU2_MENUS)
     // Settings for filament load / unload from the LCD menu.
-    // This is for Průša MK3-style extruders. Customize for your hardware.
+    // This is for PrЕЇЕЎa MK3-style extruders. Customize for your hardware.
     #define MMU2_FILAMENTCHANGE_EJECT_FEED 80.0
     #define MMU2_LOAD_TO_NOZZLE_SEQUENCE \
       {  7.2, 1145 }, \
@@ -3513,7 +3513,7 @@
   /**
    * MMU Extruder Sensor
    *
-   * Support for a Průša (or other) IR Sensor to detect filament near the extruder
+   * Support for a PrЕЇЕЎa (or other) IR Sensor to detect filament near the extruder
    * and make loading more reliable. Suitable for an extruder equipped with a filament
    * sensor less than 38mm from the gears.
    *
